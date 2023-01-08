@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="0.581">
+    <testcase classname="registration feature" name="User should be able to  register" time="0.093">
+        <system-out><![CDATA[Given user is on the registration page......................................passed
+And user enters ssn number as "883-05-1709".................................passed
+And user enters firstname as "New User" and lastname as "last"..............passed
+And user provides address "Milky way".......................................passed
+And user provides phoneNumber "456-279-5588"................................passed
+And user provides username "utilisateur"....................................passed
+And user provides email "kalin54@gmail.com".................................passed
+And user provides the firstPassword as "Utilisateur123." and secondPassword as "Utilisateur123.".passed
+Then user clicks on the register button and see the success message as "successfully registered".passed
+]]></system-out>
+    </testcase>
+</testsuite>

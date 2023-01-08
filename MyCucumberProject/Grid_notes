@@ -1,0 +1,105 @@
+1. LINK: https://www.selenium.dev/documentation/grid/
+   Getting started: https://www.selenium.dev/documentation/grid/getting_started/
+*****Selenium grid set up from scratch
+1. Create a folder under Documents : SeleniumServer
+2. *Download selenium 4 server
+https://www.selenium.dev/downloads/
+*Download chrome driver
+https://chromedriver.chromium.org/downloads
+*Download firefox driver
+https://github.com/mozilla/geckodriver/releases
+3. Move All of them inside the SeleniumServer folder
+All files must be UNZIPPED
+4. Open a terminal and change the directory to the SeleniumServer folder
+Mac: Terminal
+Windows: CMD
+***Change directory to the SeleniumServer
+*cd Documents
+*cd SeleniumServer
+OR
+*cd Documents/Selenium
+Now we are in the SeleniumServer folder
+5. In your terminal, Run this command: java -jar NAMEOFJAR standalone
+*java -jar selenium-server-4.1.2.jar standalone
+Now we should see Started Selenium Standalone 4.1.2
+This means we are able to run the selenium grid
+Then you should open the url at : http://localhost:4444
+http://192.168.0.14:4444/status
+6.
+*Create a folder under features: seleniumgrid
+*Create a feature file  : grid_feature.feature
+----
+@grid_feature
+Feature: grid_feature
+@chrome_scenario
+  Scenario: TC_01_Testing_On_Chrome
+    Given user is on the application_url with chrome
+    Then verify the title of the page is GMIBANK
+    Then close the remote driver
+------------
+7. Create a runner to run selenium grid features: GridRunner
+------
+package runners;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+import org.junit.runner.RunWith;
+@RunWith(Cucumber.class)
+@CucumberOptions(
+        plugin = {
+                "html:target/default-cucumber-reports.html",
+                "json:target/json-reports/cucumber.json",
+                "junit:target/xml-report/cucumber.xml",
+                "rerun:target/failedRerun.txt"
+        },
+        features = "./src/test/resources/features",
+        glue = "stepdefinitions",
+        tags = "@grid_feature",
+        dryRun = true
+)
+public class GridRunner {
+}
+-----------
+8.
+* Generate the step definitions and put in the GridStepDefs class
+----------
+package stepdefinitions;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+public class GridStepDefs {
+    @Given("user is on the application_url with chrome")
+    public void user_is_on_the_application_url_with_chrome() {
+    }
+    @Then("verify the title of the page is GMIBANK")
+    public void verify_the_title_of_the_page_is_gmibank() {
+    }
+    @Then("close the remote driver")
+    public void close_the_remote_driver() {
+    }
+}
+---------------
+9. Write the JAVA code
+10. Run your class
+NOTE for MAC users
+If you see this “chromedriver” cannot be opened because the developer cannot be verified.
+Go to System Preferences > Security Privacy > Allow Anyway
+Then run again
+----------
+*****What do you need to remember????
+*What is selenium grid? *When you might use selenium grid?
+Selenium grid runs tests on a RemoteWebDriver
+Generally speaking, there’s two reasons why you might want to use Grid.
+1.To run your tests against multiple browsers, multiple versions of browser, and browsers running on different operating systems.
+2.To reduce the time it takes for the test suite to complete a test pass.
+3.When you want to do cross browser testing
+4.When you want to run remote execution
+*How do you set up / run selenium grid?
+1. We need to download selenium server-currently i'm using selenium grid 4
+2. Download the drivers-currently i'm using chrome and firefox drivers
+3. I create a selenium grid session buy using standalone server
+java -jar selenium-server-4.1.2.jar standalone
+NOTE: Alternatively, we can create hub and node differently
+Create a HUB:  java -jar selenium-server-4.1.2.jar hub
+Create a NODE: java -jar selenium-server-4.1.2.jar node
+4.Create feature file and step definitions
+Note that in step definitions we use below line to create a remote driver
+driver = new RemoteWebDriver(new URL("http://localhost:4444/"),new ChromeOptions());
